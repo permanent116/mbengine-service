@@ -1,0 +1,52 @@
+[
+  {
+    "id": "m272-engine-repair",
+    "title": "Капитальный ремонт двигателя M272",
+    "description": "Полный капитальный ремонт бензинового двигателя Mercedes-Benz M272 (V6) для модели C-Class W203. Выполнена дефектовка, замена поршневой группы, коленчатого вала, шатунных и коренных подшипников, ремонт головки блока цилиндров.",
+    "engineId": "m272",
+    "type": "photo",
+    "images": ["/images/work-m272-1.jpg", "/images/work-m272-2.jpg", "/images/work-m272-3.jpg"],
+    "videoUrl": null,
+    "date": "2024-01-15"
+  },
+  {
+    "id": "m157-timing-belt-replacement",
+    "title": "Замена цепей ГРМ двигателя M157",
+    "description": "Замена цепи газораспределительного механизма и натяжных роликов на дизельном двигателе Mercedes-Benz M157 (V6) для модели C-Class W204. Также заменены зубчатый насос и термостат.",
+    "engineId": "m157",
+    "type": "video",
+    "images": ["/images/work-m157-1.jpg"],
+    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "date": "2024-02-10"
+  },
+  {
+    "id": "om642-injector-replacement",
+    "title": "Замена форсунок двигателя OM642",
+    "description": "Комплексная замена топливных форсунок на дизельном двигателе Mercedes-Benz OM642 (V6) для модели C-Class W204. Выполнена проверка всех форсунок, установлены новые оригинальные детали.",
+    "engineId": "om642",
+    "type": "photo",
+    "images": ["/images/work-om642-1.jpg", "/images/work-om642-2.jpg"],
+    "videoUrl": null,
+    "date": "2024-03-05"
+  },
+  {
+    "id": "m276-turbo-repair",
+    "title": "Ремонт турбокомпрессора двигателя M276",
+    "description": "Профессиональный ремонт турбокомпрессора на бензиновом двигателе Mercedes-Benz M276 (V6) для модели C-Class W204. Заменены подшипники, восстановлен корпус турбины, устранена утечка масла.",
+    "engineId": "m276",
+    "type": "photo",
+    "images": ["/images/work-m276-1.jpg", "/images/work-m276-2.jpg"],
+    "videoUrl": null,
+    "date": "2024-03-20"
+  },
+  {
+    "id": "m278-oil-burning-fix",
+    "title": "Устранение масложора двигателя M278",
+    "description": "Комплексное устранение проблемы повышенного расхода масла на бензиновом двигателе Mercedes-Benz M278 (V8) для модели S-Class W221. Выполнен ремонт поршневых колец, восстановление цилиндро-поршневой группы.",
+    "engineId": "m278",
+    "type": "photo",
+    "images": ["/images/work-m278-1.jpg", "/images/work-m278-2.jpg", "/images/work-m278-3.jpg"],
+    "videoUrl": null,
+    "date": "2024-04-01"
+  }
+]
