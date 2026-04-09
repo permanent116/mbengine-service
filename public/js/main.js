@@ -6,55 +6,64 @@ document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ============================================
-  // 1. Маска телефона
+  // 1. Маска телефона (без автоматического добавления +7)
   // ============================================
   const phoneInput = document.getElementById('phone');
 
   if (phoneInput) {
-    const applyPhoneMask = function(input) {
-      let rawValue = input.value.replace(/\D/g, '');
+    // Обработчик input - применяем маску к уже введённым цифрам
+    phoneInput.addEventListener('input', function(e) {
+      // Получаем только цифры из значения
+      let digits = e.target.value.replace(/\D/g, '');
       
-      if (rawValue.length === 0) {
-        input.value = '';
+      // Если поле пустое - ничего не делаем
+      if (digits.length === 0) {
         return;
       }
 
-      if (rawValue.length <= 4) {
-        input.value = '+7 (' + rawValue;
-      } else if (rawValue.length <= 8) {
-        input.value = '+7 (' + rawValue.slice(0, 3) + ') ' + rawValue.slice(3);
-      } else {
-        input.value = '+7 (' + rawValue.slice(0, 3) + ') ' + 
-                      rawValue.slice(3, 6) + '-' + rawValue.slice(6, 8);
+      // Ограничение длины до 18 цифр (для +7 (000) 000-00-00)
+      if (digits.length > 19) {
+        digits = digits.slice(0, 19);
       }
-    };
 
-    phoneInput.addEventListener('input', function(e) {
-      let value = e.target.value.replace(/\D/g, '');
+      // Применяем маску только к уже введённым цифрам, без добавления +7
+      let formattedValue = '';
       
-      if (value.length > 11) {
-        value = value.slice(0, 11);
+      if (digits.length <= 3) {
+        formattedValue = digits;
+      } else if (digits.length <= 6) {
+        formattedValue = '(' + digits.slice(0, 3) + ') ' + digits.slice(3);
+      } else if (digits.length <= 9) {
+        formattedValue = '(' + digits.slice(0, 3) + ') ' +
+                            digits.slice(3, 6) + '-' + digits.slice(6, 9);
+      } else if (digits.length <= 12) {
+        formattedValue = '(' + digits.slice(0, 3) + ') ' +
+                            digits.slice(3, 6) + '-' + digits.slice(6, 8) + '-' + digits.slice(8, 10);
+      } else if (digits.length <= 14) {
+        formattedValue = '(' + digits.slice(0, 3) + ') ' +
+                            digits.slice(3, 6) + '-' + digits.slice(6, 8) + '-' + digits.slice(8, 12);
+      } else if (digits.length <= 18) {
+        formattedValue = '(' + digits.slice(0, 3) + ') ' +
+                            digits.slice(3, 6) + '-' + digits.slice(6, 8) + '-' + digits.slice(8, 14);
       }
-
-      if (value.length === 0) {
-        e.target.value = '';
-      } else if (value.length <= 4) {
-        e.target.value = '+7 (' + value;
-      } else if (value.length <= 8) {
-        e.target.value = '+7 (' + value.slice(0, 3) + ') ' + value.slice(3);
-      } else {
-        e.target.value = '+7 (' + value.slice(0, 3) + ') ' + 
-                          value.slice(3, 6) + '-' + value.slice(6, 8);
-      }
+      
+      e.target.value = formattedValue;
     });
 
-    phoneInput.addEventListener('blur', function() {
-      if (phoneInput.value === '') {
-        phoneInput.value = '';
-      } else if (phoneInput.value.length < 12) {
-        phoneInput.value = '+7 (' + phoneInput.value.slice(0, 3) + ') ' + 
-                          phoneInput.value.slice(3, 6) + '-' + phoneInput.value.slice(6);
-      }
+    // Обработчик focus - удаляем +7 при возврате фокуса (как в contacts.ejs)
+    phoneInput.addEventListener('focus', function(e) {
+      const value = this.value;
+      // Удаляем +7 из начала значения
+      this.value = value.replace(/^\+7\s*/, '');
+      // Сбрасываем курсор в конец
+      this.setSelectionRange(this.value.length, this.value.length);
+    });
+
+    // Обработчик paste - удаляем +7 из вставленного текста (как в contacts.ejs)
+    phoneInput.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const clipboardData = (e.originalEvent || e).clipboardData.getData('text');
+      this.value = this.value.replace(/^\+7\s*/, '') + clipboardData;
     });
   }
 
@@ -124,80 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // ============================================
-  // 4. Обработка формы (запись на диагностику)
-  // ============================================
-  const form = document.querySelector('form[data-form-type="order"]');
-
-  if (form) {
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      // Валидация
-      let isValid = true;
-      let errorMessage = '';
-
-      if (!data.name || data.name.trim() === '') {
-        isValid = false;
-        errorMessage = 'Пожалуйста, введите ваше имя';
-      }
-
-      if (!data.phone || data.phone.trim() === '') {
-        isValid = false;
-        errorMessage = 'Пожалуйста, введите номер телефона';
-      } else {
-        // Проверка формата телефона (без маски)
-        const phoneValue = data.phone.replace(/\D/g, '');
-        if (phoneValue.length !== 11 || !phoneValue.startsWith('7')) {
-          isValid = false;
-          errorMessage = 'Неверный формат телефона';
-        }
-      }
-
-      if (!isValid) {
-        showErrorNotification(errorMessage);
-        return;
-      }
-
-      try {
-        const response = await fetch('/api/order', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: data.name.trim(),
-            phone: data.phone.replace(/\D/g, ''),
-            source: 'main_page_form'
-          })
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          
-          if (result.success) {
-            showSuccessNotification('Ваша заявка отправлена! Мы свяжемся с вами в течение 15 минут.');
-            form.reset();
-            
-            // Сброс маски телефона
-            if (phoneInput) {
-              phoneInput.value = '';
-            }
-          } else {
-            throw new Error(result.message || 'Ошибка при отправке заявки');
-          }
-        } else {
-          throw new Error('Серверная ошибка: ' + response.status);
-        }
-      } catch (error) {
-        console.error('Ошибка отправки формы:', error);
-        showErrorNotification('Произошла ошибка при отправке заявки. Пожалуйста, позвоните нам по телефону: ' + app.locals.contacts.phone);
-      }
-    });
-  }
 
   // ============================================
   // 5. Анимация при скролле (Intersection Observer)
@@ -383,6 +318,74 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.remove();
     });
   };
+
+  // ============================================
+  // 4. Обработчик формы заявки на главной странице
+  // ============================================
+  const quickOrderForm = document.getElementById('quickOrderForm');
+
+  if (quickOrderForm) {
+    quickOrderForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const form = this;
+      const nameInput = form.querySelector('#name');
+      const phoneInput = form.querySelector('#phone');
+      const loadingSpinner = form.querySelector('#loadingSpinner');
+      const successMessage = form.querySelector('#successMessage');
+      const errorMessage = form.querySelector('#errorMessage');
+      
+      // Сброс состояний
+      removeNotifications();
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+      
+      // Получаем данные формы
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      
+      // Показываем спиннер загрузки
+      loadingSpinner.classList.remove('hidden');
+      
+      try {
+        // Отправляем данные на сервер
+        const response = await fetch('/api/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            phone: phone,
+            source: 'Главная страница'
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          // Показываем сообщение об успехе
+          successMessage.classList.remove('hidden');
+          
+          // Очищаем форму
+          form.reset();
+        } else {
+          // Показываем сообщение об ошибке
+          const errorMsg = data.message || 'Произошла ошибка при отправке заявки';
+          errorMessage.querySelector('#errorMessageText').textContent = errorMsg;
+          errorMessage.classList.remove('hidden');
+        }
+      } catch (error) {
+        console.error('Ошибка отправки:', error);
+        const errorMsg = 'Не удалось отправить заявку. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.';
+        errorMessage.querySelector('#errorMessageText').textContent = errorMsg;
+        errorMessage.classList.remove('hidden');
+      } finally {
+        // Скрываем спиннер
+        loadingSpinner.classList.add('hidden');
+      }
+    });
+  }
 
   // ============================================
   // Инициализация при загрузке

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/images/logo.png">
     <title>MB Engine | Ремонт двигателей Mercedes Benz</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,25 +60,41 @@
         .mobile-menu.hidden {
             transform: translateX(-100%);
         }
+        
+        /* Дополнительные стили для портфолио */
+        .portfolio-card:hover img {
+            transform: scale(1.1);
+        }
+        .portfolio-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(184, 134, 11, 0.3);
+        }
+        .gradient-gold {
+            background: linear-gradient(135deg, #b8860b 0%, #daa520 100%);
+        }
+        .text-transparent-gradient {
+            background: linear-gradient(to right, #b8860b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
     </style>
     <%- typeof stylesheet !== 'undefined' ? `<link rel="stylesheet" href="${stylesheet}">` : '' %>
 </head>
 <body class="bg-gray-900 text-gray-200">
     <!-- Header -->
     <header class="bg-black/90 backdrop-blur-sm fixed w-full z-50 border-b border-gray-800">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold">
-                <span class="gold-accent">MB</span> Engine
-            </div>
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/" class="flex items-center">
+                <img src="/images/logo.png" alt="MB Engine" class="h-24 w-auto brightness-0 invert">
+            </a>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8">
                 <a href="/" class="hover:gold-accent transition">Главная</a>
                 <a href="/services" class="hover:gold-accent transition">Услуги</a>
                 <a href="/engines" class="hover:gold-accent transition">Двигатели</a>
-                <a href="/portfolio" class="hover:gold-accent transition">Портфолио</a>
-                <a href="/reviews" class="hover:gold-accent transition">Отзывы</a>
-                <a href="/prices" class="hover:gold-accent transition">Цены</a>
+                <!-- Портфолио временно скрыто -->
+                <!-- <a href="/portfolio" class="hover:gold-accent transition hidden">Портфолио</a> -->
                 <a href="/contacts" class="hover:gold-accent transition">Контакты</a>
             </div>
             
@@ -95,11 +112,12 @@
         
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-black/95 backdrop-blur-sm fixed top-16 left-0 w-full h-screen z-40">
-            <div class="flex flex-col items-center py-8 space-y-6 text-lg">
+            <div class="flex flex-col items-center py-6 space-y-6 text-lg">
                 <a href="/" class="hover:gold-accent transition">Главная</a>
                 <a href="/services" class="hover:gold-accent transition">Услуги</a>
                 <a href="/engines" class="hover:gold-accent transition">Двигатели</a>
-                <a href="/portfolio" class="hover:gold-accent transition">Портфолио</a>
+                <!-- Портфолио временно скрыто -->
+                <!-- <a href="/portfolio" class="hover:gold-accent transition hidden">Портфолио</a> -->
                 <a href="/reviews" class="hover:gold-accent transition">Отзывы</a>
                 <a href="/prices" class="hover:gold-accent transition">Цены</a>
                 <a href="/contacts" class="hover:gold-accent transition">Контакты</a>
@@ -116,36 +134,36 @@
     </main>
     
     <!-- Footer -->
-    <footer class="bg-black/90 border-t border-gray-800 mt-20">
-        <div class="container mx-auto px-4 py-12">
+    <footer class="bg-black/90 border-t border-gray-800 mt-16 py-4">
+        <div class="container mx-auto px-4 py-4">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4"><span class="gold-accent">MB</span> Engine</h3>
+                    <a href="/" class="flex items-center">
+                        <img src="/images/logo.png" alt="MB Engine" class="h-24 w-auto brightness-0 invert mb-2">
+                    </a>
                     <p class="text-gray-400 text-sm">Профессиональный ремонт двигателей Mercedes Benz в Москве</p>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4 gold-accent">Контакты</h4>
-                    <p class="text-sm text-gray-400 mb-2"><i class="fas fa-phone mr-2"></i> +7 (495) 123-45-67</p>
-                    <p class="text-sm text-gray-400 mb-2"><i class="fab fa-whatsapp mr-2"></i> +7 (999) 123-45-67</p>
-                    <p class="text-sm text-gray-400"><i class="fas fa-envelope mr-2"></i> info@mb-engine.ru</p>
+                    <a href="tel:+79269333268" class="text-sm text-gray-400 hover:text-white transition mb-2 block"><i class="fas fa-phone mr-2"></i> +7 (926) 933-32-68</a>
+                    <a href="tel:+79166668277" class="text-sm text-gray-400 hover:text-white transition mb-2 block"><i class="fab fa-whatsapp mr-2"></i> +7 (916) 666-82-77</a>
+                    <a href="mailto:mbengine.workshop@yandex.ru" class="text-sm text-gray-400 hover:text-white transition block"><i class="fas fa-envelope mr-2"></i> mbengine.workshop@yandex.ru</a>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4 gold-accent">Режим работы</h4>
-                    <p class="text-sm text-gray-400">Пн-Пт: 9:00 - 21:00</p>
-                    <p class="text-sm text-gray-400">Сб: 10:00 - 18:00</p>
+                    <p class="text-sm text-gray-400">Пн-Пт: 9:00 - 20:00</p>
+                    <p class="text-sm text-gray-400">Сб: 10:00 - 17:00</p>
                     <p class="text-sm text-gray-400">Вс: Выходной</p>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4 gold-accent">Мы в соцсетях</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:gold-accent text-xl"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="text-gray-400 hover:gold-accent text-xl"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="text-gray-400 hover:gold-accent text-xl"><i class="fab fa-vk"></i></a>
+                        <a href="https://vk.com/club237284455" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:gold-accent text-xl transition"><i class="fab fa-vk"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-                <p>&copy; 2024 MB Engine. Все права защищены.</p>
+            <div class="border-t border-gray-800 mt-4 pt-4 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 MB Engine. Все права защищены.</p>
             </div>
         </div>
     </footer>

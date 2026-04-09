@@ -1,0 +1,24 @@
+   <!-- Блокируем автодобавление +7 браузером -->
+        <script>
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                // Отменяем автоформатирование при любом вводе
+                phoneInput.addEventListener('input', function(e) {
+                    this.value = this.value.replace(/^\+7\s*/, '');
+                    this.setSelectionRange(this.value.length, this.value.length);
+                });
+                
+                // Отменяем автоформатирование при фокусе
+                phoneInput.addEventListener('focus', function() {
+                    this.value = this.value.replace(/^\+7\s*/, '');
+                    this.setSelectionRange(this.value.length, this.value.length);
+                });
+                
+                // Блокируем вставку через Ctrl+V
+                phoneInput.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const clipboardData = (e.originalEvent || e).clipboardData.getData('text');
+                    this.value = this.value.replace(/^\+7\s*/, '') + clipboardData;
+                });
+            }
+        </script>

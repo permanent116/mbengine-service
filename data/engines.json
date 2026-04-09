@@ -1,51 +1,55 @@
 [
   {
     "id": "m272",
-    "name": "M272",
-    "type": "бензиновый V6",
+    "name": "M272-M273",
+    "type": "Бензиновый V6-V8 2.5-5.5 л",
     "years": "2004-2011",
-    "description": "Бензиновый двигатель V6 3.0 л для моделей C-Class (W203), CLK (W209)"
-  },
-  {
-    "id": "m273",
-    "name": "M273",
-    "type": "бензиновый V6",
-    "years": "2004-2011",
-    "description": "Бензиновый двигатель V6 3.5 л для моделей C-Class (W203), CLK (W209)"
+    "description": "Бензиновый двигатель V6-V8 2.5-3.5 л для моделей S-Class (W221), Ml-class (W164), E-class(W212)",
+    "models": ["S350", "E350", "GL550"],
+    "photo": "/images/engines/m272.jpg"
   },
   {
     "id": "m276",
     "name": "M276",
-    "type": "бензиновый V6",
+    "type": "Бензиновый V6 3.5",
     "years": "2006-2014",
-    "description": "Бензиновый двигатель V6 3.5 л для моделей C-Class (W204), CLS (W219)"
+    "description": "Бензиновый двигатель V6 3.5 л для моделей C-Class (W204), CLS (W219)",
+    "models": ["S350", "CLS350", "CLS350"],
+    "photo": "/images/engines/m276.jpg"
   },
   {
     "id": "m278",
     "name": "M278",
-    "type": "бензиновый V8",
+    "type": "Бензиновый V8 4.7",
     "years": "2005-2014",
-    "description": "Бензиновый двигатель V8 4.3-6.2 л для моделей S-Class (W221), CL (W216)"
+    "description": "Бензиновый двигатель V8 4.7 л для моделей S-Class (W222), CL (W216)",
+    "models": ["S500", "S550", "CL500", "CL550", "S600"],
+    "photo": "/images/engines/m278.jpg"
   },
   {
     "id": "m157",
     "name": "M157",
-    "type": "дизельный V6",
+    "type": "бензиновый V8 5.5",
     "years": "2004-2013",
-    "description": "Дизельный двигатель V6 3.0 л для моделей C-Class (W204), CLS (W219)"
+    "description": "Бензиновый двигатель V8 5.5 л для моделей S-Class (W222), GL-class (W166)",
+    "models": ["S600", "GL600"],
+    "photo": "/images/engines/m157.jpg"
   },
   {
     "id": "m176",
     "name": "M176",
-    "type": "дизельный V8",
-    "years": "2005-2014",
-    "description": "Дизельный двигатель V8 5.5 л для моделей S-Class (W221), CL (W216)"
+    "type": "Бензиновый V8 4.0",
+    "description": "Бензиновый двигатель V8 4.0 л для моделей S-Class maybah (W222), ",
+    "models": ["S600 ", "CL600 "],
+    "photo": "/images/engines/m176.jpg"
   },
   {
     "id": "om642",
     "name": "OM642",
-    "type": "дизельный V6",
+    "type": "Дизельный V6 3.0",
     "years": "2004-2013",
-    "description": "Дизельный двигатель V6 2.7 л для моделей C-Class (W203, W204), CLK (W209)"
+    "description": "Дизельный двигатель V6 3.0 л для моделей GL-Class (W166, W222)",
+    "models": ["GL350 CDI", "S300 CDI", "CLK300 CDI"],
+    "photo": "/images/engines/om642.jpg"
   }
 ]
