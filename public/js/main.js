@@ -68,13 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // ============================================
-  // 2. Мобильное меню
+  // 2. Мобильное меню (функция toggleMobileMenu)
   // ============================================
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenu = document.getElementById('mobileMenu');
 
   if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', function() {
+    function toggleMobileMenu() {
       const isHidden = mobileMenu.classList.contains('hidden');
       
       if (isHidden) {
@@ -84,7 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenu.classList.add('hidden');
         mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
       }
-    });
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
     // Закрыть меню при клике на ссылку
     const menuLinks = mobileMenu.querySelectorAll('a');
