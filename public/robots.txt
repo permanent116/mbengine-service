@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Карта сайта для поисковых роботов
+Sitemap: /sitemap/sitemap-index.xml
+
+# Метрики и аналитика (разрешаем)
+Allow: /api/order
+
+# Запрещаем доступ к статическим файлам, если они не нужны роботам
+Disallow: /images/
+Disallow: /js/

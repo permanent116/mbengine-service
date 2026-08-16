@@ -45,6 +45,93 @@ try {
   console.error('Ошибка загрузки portfolio.json:', error.message);
 }
 
+// Функция генерации sitemap динамически
+function generateSitemap() {
+  const baseUrl = process.env.SITE_URL || 'http://mbengine.ru';
+  const lastmod = new Date().toISOString();
+  
+  let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Главная страница -->
+    <url>
+      <loc>${baseUrl}/</loc>
+      <lastmod>${lastmod}</lastmod>
+      <priority>1.00</priority>
+    </url>
+
+    <!-- Страница услуг -->
+    <url>
+      <loc>${baseUrl}/services</loc>
+      <lastmod>${lastmod}</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <!-- Страница двигателей -->
+    <url>
+      <loc>${baseUrl}/engines</loc>
+      <lastmod>${lastmod}</lastmod>
+      <priority>0.80</priority>
+    </url>`;
+
+  // Добавляем страницы портфолио для каждого двигателя
+  if (portfolio && portfolio.length > 0) {
+    sitemapContent += `\n\n    <!-- Портфолио ремонтов -->`;
+    portfolio.forEach((item, index) => {
+      const engineName = item.engine || `engine-${index + 1}`;
+      sitemapContent += `
+    <url>
+      <loc>${baseUrl}/portfolio/${encodeURIComponent(engineName)}</loc>
+      <lastmod>${lastmod}</lastmod>
+      <priority>0.60</priority>
+    </url>`;
+    });
+  }
+
+  sitemapContent += `
+  
+    <!-- Страница контактов -->
+    <url>
+      <loc>${baseUrl}/contacts</loc>
+      <lastmod>${lastmod}</lastmod>
+      <priority>0.70</priority>
+    </url>
+  </urlset>`;
+
+  return sitemapContent;
+}
+
+// API endpoint для получения динамического sitemap
+app.get('/sitemap.xml', (req, res) => {
+  const sitemap = generateSitemap();
+  res.set({
+    'Content-Type': 'application/xml',
+    'Cache-Control': 'no-cache'
+  });
+  res.send(sitemap);
+});
+
+// API endpoint для получения robots.txt динамически
+app.get('/robots.txt', (req, res) => {
+  const robotsContent = `User-agent: *
+Allow: /
+
+# Карта сайта для поисковых роботов
+Sitemap: ${process.env.SITE_URL || 'http://mbengine.ru'}/sitemap/sitemap-index.xml
+
+# Метрики и аналитика (разрешаем)
+Allow: /api/order
+
+# Запрещаем доступ к статическим файлам, если они не нужны роботам
+Disallow: /images/
+Disallow: /js/`;
+
+  res.set({
+    'Content-Type': 'text/plain'
+  });
+  res.send(robotsContent);
+});
+
 // Глобальная переменная для хранения данных услуг
 app.locals.data = {
   services: services,
