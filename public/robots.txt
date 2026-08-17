@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Карта сайта для поисковых роботов
-Sitemap: /sitemap/sitemap-index.xml
+Sitemap: http://mbengine.ru/sitemap/sitemap-index.xml
 
 # Метрики и аналитика (разрешаем)
 Allow: /api/order
